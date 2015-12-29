@@ -27,10 +27,17 @@ public class Contact implements Serializable {
     }
 
     public Contact(String name, String phone, String email, String age) {
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.age = age;
+
+
+        try {
+            Integer.parseInt(age);
+        } catch (NumberFormatException e) {
+            age = null;
+        }
+            this.name = name;
+            this.phone = phone;
+            this.email = email;
+            this.age = age;
     }
 
     public Long getId() {

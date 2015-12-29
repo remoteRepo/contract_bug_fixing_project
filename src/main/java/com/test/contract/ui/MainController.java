@@ -70,7 +70,10 @@ public class MainController {
         TableColumn<Contact, String> emailColumn = new TableColumn<>("E-mail");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn);
+        TableColumn<Contact, String> ageColumn = new TableColumn<>("Age");
+        ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
+
+        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn, ageColumn);
 
         // Данные таблицы
         table.setItems(data);
