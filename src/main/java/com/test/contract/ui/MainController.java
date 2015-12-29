@@ -28,6 +28,8 @@ public class MainController {
     @FXML private TextField txtEmail;
     @FXML private TextField txtAge;
 
+
+
     // Variables
     private ObservableList<Contact> data;
 
