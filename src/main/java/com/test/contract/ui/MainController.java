@@ -22,11 +22,16 @@ public class MainController {
     private ContactService contactService;
 
     // Инъекции JavaFX
-    @FXML private TableView<Contact> table;
-    @FXML private TextField txtName;
-    @FXML private TextField txtPhone;
-    @FXML private TextField txtEmail;
-    @FXML private TextField txtAge;
+    @FXML
+    private TableView<Contact> table;
+    @FXML
+    private TextField txtName;
+    @FXML
+    private TextField txtPhone;
+    @FXML
+    private TextField txtEmail;
+    @FXML
+    private TextField txtAge;
 
     // Variables
     private ObservableList<Contact> data;
@@ -34,10 +39,10 @@ public class MainController {
     /**
      * Инициализация контроллера от JavaFX.
      * Метод вызывается после того как FXML загрузчик произвел инъекции полей.
-     *
+     * <p>
      * Обратите внимание, что имя метода <b>обязательно</b> должно быть "initialize",
      * в противном случае, метод не вызовется.
-     *
+     * <p>
      * Также на этом этапе еще отсутствуют бины спринга
      * и для инициализации лучше использовать метод,
      * описанный аннотацией @PostConstruct,
@@ -82,12 +87,33 @@ public class MainController {
      */
     @FXML
     public void addContact() {
+//cмотри - выделяешь строчку с if - > и нажимаешь ALT+F8 -> РЕЗУЛЬТАТ ПРОВЕРКИ IF(---> ТВОЙ ПРЕДИКАТ (УСЛОВИЕ) <<--) = FALSE, КАК ТЫ ВИДЕШЛ
         Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
-        contactService.save(contact);
-        data.add(contact);
 
-        txtName.setText("");
-        txtPhone.setText("");
-        txtEmail.setText("");
+        if (!contact.getName().isEmpty() && !contact.getPhone().isEmpty() && !contact.getEmail().isEmpty() && !contact.getAge().isEmpty()) {
+            if (checkString(contact.getAge())) {
+                contactService.save(contact);
+                data.add(contact);//это то, что отвечает за вывод листинга с контрактами на ui
+                //из-за этого у тебя не отрабатывало только сохранение в базу --->>>   contactService.save(contact);
+
+                txtName.setText("");
+                txtPhone.setText("");
+                txtEmail.setText("");
+                txtAge.setText("");
+            }
+        }
+    }
+
+    public boolean checkString(String string) {
+        try {
+            Integer.parseInt(string);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }
+
+
+
+

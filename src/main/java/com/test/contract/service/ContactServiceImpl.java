@@ -24,7 +24,7 @@ public class ContactServiceImpl implements ContactService {
      */
     @PostConstruct
     public void generateTestData() {
-        save(new Contact("Customer1", "+123456789", "ivan@test.email", "22"));
+        save(new Contact("Customer1", "+123456789", "ivan@test.email", "22"));//
         save(new Contact("Customer2", "+987654321", "petr@test.email", "22"));
     }
 
