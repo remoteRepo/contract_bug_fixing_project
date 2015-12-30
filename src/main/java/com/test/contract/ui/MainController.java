@@ -89,5 +89,6 @@ public class MainController {
         txtName.setText("");
         txtPhone.setText("");
         txtEmail.setText("");
+        txtAge.setText("");
     }
 }
