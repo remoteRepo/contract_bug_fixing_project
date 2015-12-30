@@ -72,7 +72,10 @@ public class MainController {
         TableColumn<Contact, String> emailColumn = new TableColumn<>("E-mail");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn);
+        TableColumn<Contact, String> ageColumn = new TableColumn<>("Age");
+        ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
+
+        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn, ageColumn);
 
         // Данные таблицы
         table.setItems(data);
@@ -82,9 +85,15 @@ public class MainController {
      * Метод, вызываемый при нажатии на кнопку "Добавить".
      * Привязан к кнопке в FXML файле представления.
      */
+
+
+
     @FXML
     public void addContact() {
-        Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
+
+        CheckAgeClass checkAgeClass = new CheckAgeClass(txtAge.getText());
+
+        Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), checkAgeClass.checkAge());
         contactService.save(contact);
         data.add(contact);
 
