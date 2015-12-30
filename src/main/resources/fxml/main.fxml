@@ -25,12 +25,12 @@
                   <Insets right="3.0" />
                </HBox.margin>
             </TextField>
-            <TextField fx:id="txtAge" promptText="E-mail">
+            <TextField fx:id="txtAge" promptText="Age">
                <HBox.margin>
                   <Insets right="3.0" />
                </HBox.margin>
             </TextField>
-            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#addContact" text="Добавить" />
+            <Button fx:id="button" minWidth="-Infinity" mnemonicParsing="false" onAction="#addContact" text="Добавить" disable="true" />
          </children>
       </HBox>
    </children>
