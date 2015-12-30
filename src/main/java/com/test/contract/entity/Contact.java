@@ -14,10 +14,10 @@ public class Contact implements Serializable {
     @Column
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = false)
     private String phone;
 
-    @Column(unique = true)
+    @Column(unique = false)
     private String email;
 
     @Column
@@ -50,7 +50,7 @@ public class Contact implements Serializable {
     }
 
     public String getPhone() {
-        return phone;
+      return phone;
     }
 
     public void setPhone(String phone) {
@@ -58,7 +58,7 @@ public class Contact implements Serializable {
     }
 
     public String getEmail() {
-        return email;
+       return email;
     }
 
     public void setEmail(String email) {
