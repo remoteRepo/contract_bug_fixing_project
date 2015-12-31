@@ -87,7 +87,7 @@ public class MainController {
      */
     @FXML
     public void addContact() {
-        Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), checkAge(txtAge.getText()));
+        Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), checkVariable(txtAge.getText()));
         contactService.save(contact);
         data.add(contact);
 
@@ -96,8 +96,9 @@ public class MainController {
         txtEmail.setText("");
     }
 
-    private String checkAge(String str) {
+    // Method for String variables varification
+    private String checkVariable(String str) {
                 if (str.matches("(?!0)[0-9]*"))return str;
-                else return "not applicable value";
+                else return null;
            }
 }
