@@ -72,7 +72,10 @@ public class MainController {
         TableColumn<Contact, String> emailColumn = new TableColumn<>("E-mail");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn);
+        TableColumn<Contact, String> ageColumn = new TableColumn<>("Age");
+        ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
+
+        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn, ageColumn);
 
         // Данные таблицы
         table.setItems(data);
@@ -84,12 +87,19 @@ public class MainController {
      */
     @FXML
     public void addContact() {
-        Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
+        Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), checkVariable(txtAge.getText()));
         contactService.save(contact);
         data.add(contact);
 
         txtName.setText("");
         txtPhone.setText("");
         txtEmail.setText("");
+        txtAge.setText("");
+    }
+
+    // Method for String variables verification
+    public String checkVariable(String str) {
+        if (str.matches("(?!0)[0-9]*"))return str;
+        else return null;
     }
 }
