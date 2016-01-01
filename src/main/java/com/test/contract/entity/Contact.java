@@ -26,12 +26,21 @@ public class Contact implements Serializable {
     public Contact() {
     }
 
+
+    public Contact(String name, String phone, String email){
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+    }
+
+
     public Contact(String name, String phone, String email, String age) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.age = age;
     }
+
 
     public Long getId() {
         return id;

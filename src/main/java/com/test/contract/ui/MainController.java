@@ -72,7 +72,12 @@ public class MainController {
         TableColumn<Contact, String> emailColumn = new TableColumn<>("E-mail");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn);
+        TableColumn<Contact, String> ageColumn = new TableColumn<>("Age");
+        ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
+
+
+
+        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn, ageColumn);
 
         // Данные таблицы
         table.setItems(data);
@@ -84,12 +89,22 @@ public class MainController {
      */
     @FXML
     public void addContact() {
-        Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
-        contactService.save(contact);
-        data.add(contact);
+
+
+        if (txtAge.getText().matches("(?!0)[0-9]*")){
+            Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
+            contactService.save(contact);
+            data.add(contact);
+        }
+        else{
+            Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText());
+            contactService.save(contact);
+            data.add(contact);
+        }
 
         txtName.setText("");
         txtPhone.setText("");
         txtEmail.setText("");
+        txtAge.setText("");
     }
 }
