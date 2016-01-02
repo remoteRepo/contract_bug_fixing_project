@@ -88,13 +88,17 @@ public class MainController {
         String removedEmail = txtEmail.getText().trim();
         String removedAge = txtAge.getText().trim();
 
-        if(!(removedName.equals("")) && !(removedPhone.equals("")) && !(removedEmail.equals("")) && !(removedAge.equals(""))) {
-            contactService.save(contact);
-            data.add(contact);
-            txtName.setText("");
-            txtPhone.setText("");
-            txtEmail.setText("");
-            txtAge.setText("");
+        String regex = "\\d+";
+
+        if((removedAge.matches(regex))) {
+            if (!(removedName.equals("")) && !(removedPhone.equals("")) && !(removedEmail.equals("")) && !(removedAge.equals(""))) {
+                contactService.save(contact);
+                data.add(contact);
+                txtName.setText("");
+                txtPhone.setText("");
+                txtEmail.setText("");
+                txtAge.setText("");
+            }
         }
     }
 }
