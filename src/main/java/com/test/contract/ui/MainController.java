@@ -86,12 +86,23 @@ public class MainController {
         String removedName = txtName.getText().trim();
         String removedPhone = txtPhone.getText().trim();
         String removedEmail = txtEmail.getText().trim();
-        String removedAge = txtAge.getText().trim();
+        String removedAge = txtAge.getText();
+
+        char[] chArray = removedAge.toCharArray();
+        for(int i = 0; i<chArray.length; i++){
+            if(chArray[i] == '0'){
+                chArray[i] = ' ';
+            }else{
+                break;
+            }
+        }
+        String removedAgeS = new String(chArray);
+        String removedAgeT = removedAgeS.trim();
+        txtAge.setText(removedAgeT);
 
         String regex = "\\d+";
-
         if((removedAge.matches(regex))) {
-            if (!(removedName.equals("")) && !(removedPhone.equals("")) && !(removedEmail.equals("")) && !(removedAge.equals(""))) {
+            if (!(removedName.equals("")) && !(removedPhone.equals("")) && !(removedEmail.equals("")) && !(removedAgeT.equals(""))) {
                 contactService.save(contact);
                 data.add(contact);
                 txtName.setText("");
