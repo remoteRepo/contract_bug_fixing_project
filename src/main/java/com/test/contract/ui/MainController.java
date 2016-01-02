@@ -83,20 +83,20 @@ public class MainController {
     @FXML
     public void addContact() {
         Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
-        if((txtName.getText().equals("")) || (txtPhone.getText().equals("")) || (txtEmail.getText().equals("")) || (txtAge.getText().equals(""))) {
-            txtName.setText("");
-            txtPhone.setText("");
-            txtEmail.setText("");
-            txtAge.setText("");
+        String removedName = txtName.getText().trim();
+        String removedPhone = txtPhone.getText().trim();
+        String removedEmail = txtEmail.getText().trim();
+        String removedAge = txtAge.getText().trim();
+
+        if((removedName.equals("")) || (removedPhone.equals("")) || (removedEmail.equals("")) || (removedAge.equals(""))) {
+
         }else{
             contactService.save(contact);
             data.add(contact);
-
             txtName.setText("");
             txtPhone.setText("");
             txtEmail.setText("");
             txtAge.setText("");
         }
-
     }
 }
