@@ -88,9 +88,7 @@ public class MainController {
         String removedEmail = txtEmail.getText().trim();
         String removedAge = txtAge.getText().trim();
 
-        if((removedName.equals("")) || (removedPhone.equals("")) || (removedEmail.equals("")) || (removedAge.equals(""))) {
-
-        }else{
+        if(!(removedName.equals("")) && !(removedPhone.equals("")) && !(removedEmail.equals("")) && (removedAge.equals(""))) {
             contactService.save(contact);
             data.add(contact);
             txtName.setText("");
