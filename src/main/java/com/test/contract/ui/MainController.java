@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("SpringJavaAutowiringInspection")
 public class MainController {
@@ -86,29 +88,22 @@ public class MainController {
         String removedName = txtName.getText().trim();
         String removedPhone = txtPhone.getText().trim();
         String removedEmail = txtEmail.getText().trim();
-        String removedAge = txtAge.getText();
+        String removedAge = txtAge.getText().trim();
 
-        char[] chArray = removedAge.toCharArray();
-        for(int i = 0; i<chArray.length; i++){
-            if(chArray[i] == '0'){
-                chArray[i] = ' ';
-            }else{
-                break;
-            }
-        }
-        String removedAgeS = new String(chArray);
-        String removedAgeT = removedAgeS.trim();
-        txtAge.setText(removedAgeT);
+        Pattern pattern = Pattern.compile("0");
+        Matcher matcher = pattern.matcher(removedAge);
 
-        String regex = "\\d+";
-        if((removedAge.matches(regex))) {
-            if (!(removedName.equals("")) && !(removedPhone.equals("")) && !(removedEmail.equals("")) && !(removedAgeT.equals(""))) {
-                contactService.save(contact);
-                data.add(contact);
-                txtName.setText("");
-                txtPhone.setText("");
-                txtEmail.setText("");
-                txtAge.setText("");
+        if (!(matcher.lookingAt())) {
+            String regex = "\\d+";
+            if ((removedAge.matches(regex))) {
+                if (!(removedName.equals("")) && !(removedPhone.equals("")) && !(removedEmail.equals("")) && !(removedAge.equals(""))) {
+                    contactService.save(contact);
+                    data.add(contact);
+                    txtName.setText("");
+                    txtPhone.setText("");
+                    txtEmail.setText("");
+                    txtAge.setText("");
+                }
             }
         }
     }
