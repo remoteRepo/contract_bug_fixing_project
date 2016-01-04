@@ -25,7 +25,7 @@
                   <Insets right="3.0" />
                </HBox.margin>
             </TextField>
-            <TextField fx:id="txtAge" promptText="E-mail">
+            <TextField fx:id="txtAge" promptText="Возраст">
                <HBox.margin>
                   <Insets right="3.0" />
                </HBox.margin>
