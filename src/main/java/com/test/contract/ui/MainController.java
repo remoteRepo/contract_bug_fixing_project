@@ -28,6 +28,8 @@ public class MainController {
     @FXML private TextField txtEmail;
     @FXML private TextField txtAge;
 
+
+
     // Variables
     private ObservableList<Contact> data;
 
@@ -83,11 +85,26 @@ public class MainController {
     @FXML
     public void addContact() {
         Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
-        contactService.save(contact);
-        data.add(contact);
+        if (!contact.getName().isEmpty() && !contact.getPhone().isEmpty() && !contact.getEmail().isEmpty() && !contact.getAge().isEmpty()) {
+            if (checkString(contact.getAge())) {
+                contactService.save(contact);
+                data.add(contact);//это то, что отвечает за вывод листинга с контрактами на ui
+                //из-за этого у тебя не отрабатывало только сохранение в базу --->>>   contactService.save(contact);
 
-        txtName.setText("");
-        txtPhone.setText("");
-        txtEmail.setText("");
+                txtName.setText("");
+                txtPhone.setText("");
+                txtEmail.setText("");
+                txtAge.setText("");
+            }
+        }
+    }
+
+    public boolean checkString(String string) {
+        try {
+            Integer.parseInt(string);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }
