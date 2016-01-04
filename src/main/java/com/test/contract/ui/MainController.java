@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("SpringJavaAutowiringInspection")
 public class MainController {
@@ -83,11 +85,26 @@ public class MainController {
     @FXML
     public void addContact() {
         Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
-        contactService.save(contact);
-        data.add(contact);
+        String removedName = txtName.getText().trim();
+        String removedPhone = txtPhone.getText().trim();
+        String removedEmail = txtEmail.getText().trim();
+        String removedAge = txtAge.getText().trim();
 
-        txtName.setText("");
-        txtPhone.setText("");
-        txtEmail.setText("");
+        Pattern pattern = Pattern.compile("0");
+        Matcher matcher = pattern.matcher(removedAge);
+
+        if (!(matcher.lookingAt())) {
+            String regex = "\\d+";
+            if ((removedAge.matches(regex))) {
+                if (!(removedName.equals("")) && !(removedPhone.equals("")) && !(removedEmail.equals("")) && !(removedAge.equals(""))) {
+                    contactService.save(contact);
+                    data.add(contact);
+                    txtName.setText("");
+                    txtPhone.setText("");
+                    txtEmail.setText("");
+                    txtAge.setText("");
+                }
+            }
+        }
     }
 }
