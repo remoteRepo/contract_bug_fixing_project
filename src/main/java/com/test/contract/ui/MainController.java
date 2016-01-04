@@ -70,7 +70,10 @@ public class MainController {
         TableColumn<Contact, String> emailColumn = new TableColumn<>("E-mail");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn);
+        TableColumn<Contact, String> ageColumn = new TableColumn<>("Возраст");
+        ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
+
+        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn, ageColumn);
 
         // Данные таблицы
         table.setItems(data);
@@ -83,11 +86,32 @@ public class MainController {
     @FXML
     public void addContact() {
         Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
-        contactService.save(contact);
-        data.add(contact);
+        if (!txtName.getText().isEmpty() && !txtPhone.getText().isEmpty() &&
+                !txtEmail.getText().isEmpty() && !txtAge.getText().isEmpty()) {
+            if(checkAge(txtAge.getText())){
 
-        txtName.setText("");
-        txtPhone.setText("");
-        txtEmail.setText("");
+                contactService.save(contact);
+
+                data.add(contact);
+                txtName.setText("");
+                txtPhone.setText("");
+                txtEmail.setText("");
+                txtAge.setText("");
+            }
+        }
+    }
+
+    private static boolean checkAge(String txtAge) {
+        return txtAge.matches("(?!0)[0-9]*");
+
+
+            /*if(txtAge.matches("(?!0)[0-9]*")){
+                return true;
+
+            }else {
+                System.out.println("please check age value");
+            }
+
+            return false;*/
     }
 }
