@@ -1,24 +1,18 @@
 package com.test.contract.ui;
 
-import com.sun.java.accessibility.util.EventID;
 import com.test.contract.entity.Contact;
 import com.test.contract.service.ContactService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.event.EventTarget;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CharacterEditor;
 
 import javax.annotation.PostConstruct;
-import java.util.EventObject;
 import java.util.List;
 
 @SuppressWarnings("SpringJavaAutowiringInspection")
@@ -51,51 +45,9 @@ public class MainController {
      * который вызовется спрингом, после того, как им будут произведены все инъекции.
      * {@link MainController#init()}
      */
-
-    @FXML
-    private Button button;
-
-    boolean nameTyped = false;
-    boolean phoneTyped = false;
-    boolean emailTyped = false;
-    boolean ageTyped = false;
-
-    public void check() {
-        if (nameTyped && phoneTyped && emailTyped && ageTyped) {
-            button.setDisable(false);
-        }
-    }
-
     @FXML
     public void initialize() {
-            txtName.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent event) { nameTyped = true; check(); }
-            });
-            txtPhone.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent event) { phoneTyped = true; check(); }
-            });
-            txtEmail.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent event) { emailTyped = true; check(); }
-            });
-            txtAge.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent event) { ageTyped = true; check(); }
-            });
-            button.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    nameTyped = false;
-                    phoneTyped = false;
-                    emailTyped = false;
-                    ageTyped = false;
-                    button.setDisable(true);
-                }
-            });
     }
-
 
     /**
      * На этом этапе уже произведены все возможные инъекции.
@@ -132,15 +84,28 @@ public class MainController {
      * Метод, вызываемый при нажатии на кнопку "Добавить".
      * Привязан к кнопке в FXML файле представления.
      */
+
+    public boolean checkAge(String ageTest) {
+        try {
+            Integer.parseInt(ageTest);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+
     @FXML
     public void addContact() {
         Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
-        contactService.save(contact);
-        data.add(contact);
+        if (checkAge(txtAge.getText())) {
+            contactService.save(contact);
+            data.add(contact);
 
-        txtName.setText("");
-        txtPhone.setText("");
-        txtEmail.setText("");
-        txtAge.setText("");
+            txtName.setText("");
+            txtPhone.setText("");
+            txtEmail.setText("");
+            txtAge.setText("");
+        }
     }
 }
