@@ -86,12 +86,8 @@ public class MainController {
      */
 
     public boolean checkAge(String ageTest) {
-        try {
-            Integer.parseInt(ageTest);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+        if (ageTest == null) return false;
+        return ageTest.matches("^-?\\d+$");
     }
 
 
