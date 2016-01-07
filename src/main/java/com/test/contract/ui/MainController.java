@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CharacterEditor;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -70,7 +71,10 @@ public class MainController {
         TableColumn<Contact, String> emailColumn = new TableColumn<>("E-mail");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn);
+        TableColumn<Contact, String> ageColumn = new TableColumn<>("Age");
+        ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
+
+        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn, ageColumn);
 
         // Данные таблицы
         table.setItems(data);
@@ -80,14 +84,24 @@ public class MainController {
      * Метод, вызываемый при нажатии на кнопку "Добавить".
      * Привязан к кнопке в FXML файле представления.
      */
+
+    public boolean checkAge(String ageTest) {
+        if (ageTest == null) return false;
+        return ageTest.matches("^-?\\d+$");
+    }
+
+
     @FXML
     public void addContact() {
         Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
-        contactService.save(contact);
-        data.add(contact);
+        if (checkAge(txtAge.getText())) {
+            contactService.save(contact);
+            data.add(contact);
 
-        txtName.setText("");
-        txtPhone.setText("");
-        txtEmail.setText("");
+            txtName.setText("");
+            txtPhone.setText("");
+            txtEmail.setText("");
+            txtAge.setText("");
+        }
     }
 }
