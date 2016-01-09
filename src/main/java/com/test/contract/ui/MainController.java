@@ -5,6 +5,7 @@ import com.test.contract.service.ContactService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+
 
 @SuppressWarnings("SpringJavaAutowiringInspection")
 public class MainController {
@@ -27,6 +29,8 @@ public class MainController {
     @FXML private TextField txtPhone;
     @FXML private TextField txtEmail;
     @FXML private TextField txtAge;
+
+    @FXML private Button button;
 
     // Variables
     private ObservableList<Contact> data;
@@ -46,6 +50,12 @@ public class MainController {
      */
     @FXML
     public void initialize() {
+        button.disableProperty().bind(
+                txtName.textProperty().isEmpty()
+                .or(txtPhone.textProperty().isEmpty()
+                .or(txtEmail.textProperty().isEmpty()
+                .or(txtAge.textProperty().isEmpty())))
+        );
     }
 
     /**
@@ -70,7 +80,10 @@ public class MainController {
         TableColumn<Contact, String> emailColumn = new TableColumn<>("E-mail");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn);
+        TableColumn<Contact, String> ageColumn = new TableColumn<>("Age");
+        ageColumn.setCellValueFactory(new PropertyValueFactory<>("age"));
+
+        table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn, ageColumn);
 
         // Данные таблицы
         table.setItems(data);
@@ -80,14 +93,24 @@ public class MainController {
      * Метод, вызываемый при нажатии на кнопку "Добавить".
      * Привязан к кнопке в FXML файле представления.
      */
+
+    public boolean checkAge(String ageTest) {
+        if (ageTest == null) return false;
+        return ageTest.matches("^-?\\d+$");
+    }
+
+
     @FXML
     public void addContact() {
         Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
-        contactService.save(contact);
-        data.add(contact);
+        if (checkAge(txtAge.getText())) {
+            contactService.save(contact);
+            data.add(contact);
 
-        txtName.setText("");
-        txtPhone.setText("");
-        txtEmail.setText("");
+            txtName.setText("");
+            txtPhone.setText("");
+            txtEmail.setText("");
+            txtAge.setText("");
+        }
     }
 }
