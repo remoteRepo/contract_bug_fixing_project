@@ -5,15 +5,16 @@ import com.test.contract.service.ContactService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CharacterEditor;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+
 
 @SuppressWarnings("SpringJavaAutowiringInspection")
 public class MainController {
@@ -28,6 +29,8 @@ public class MainController {
     @FXML private TextField txtPhone;
     @FXML private TextField txtEmail;
     @FXML private TextField txtAge;
+
+    @FXML private Button button;
 
     // Variables
     private ObservableList<Contact> data;
@@ -47,6 +50,12 @@ public class MainController {
      */
     @FXML
     public void initialize() {
+        button.disableProperty().bind(
+                txtName.textProperty().isEmpty()
+                .or(txtPhone.textProperty().isEmpty()
+                .or(txtEmail.textProperty().isEmpty()
+                .or(txtAge.textProperty().isEmpty())))
+        );
     }
 
     /**
