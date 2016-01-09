@@ -96,7 +96,7 @@ public class MainController {
 
     public boolean checkAge(String ageTest) {
         if (ageTest == null) return false;
-        return ageTest.matches("^-?\\d+$");
+        return ageTest.matches("(?!0)\\d*");
     }
 
 
