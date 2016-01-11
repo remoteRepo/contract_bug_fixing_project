@@ -84,12 +84,15 @@ public class MainController {
     @FXML
     public void addContact() {
         Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
-        contactService.save(contact);
-        data.add(contact);
+        if (!txtName.getText().isEmpty() && !txtPhone.getText().isEmpty() &&
+                !txtEmail.getText().isEmpty() && !txtAge.getText().isEmpty()) {
+            contactService.save(contact);
+            data.add(contact);
 
-        txtName.setText("");
-        txtPhone.setText("");
-        txtEmail.setText("");
-        txtAge.setText("");
+            txtName.setText("");
+            txtPhone.setText("");
+            txtEmail.setText("");
+            txtAge.setText("");
+        }
     }
 }
