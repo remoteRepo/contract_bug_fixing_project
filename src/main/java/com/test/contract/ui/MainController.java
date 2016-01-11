@@ -86,13 +86,15 @@ public class MainController {
         Contact contact = new Contact(txtName.getText(), txtPhone.getText(), txtEmail.getText(), txtAge.getText());
         if (!txtName.getText().isEmpty() && !txtPhone.getText().isEmpty() &&
                 !txtEmail.getText().isEmpty() && !txtAge.getText().isEmpty()) {
-            contactService.save(contact);
-            data.add(contact);
+            if (txtAge.getText().matches("(?!0)[0-9]*")) {
+                contactService.save(contact);
+                data.add(contact);
 
-            txtName.setText("");
-            txtPhone.setText("");
-            txtEmail.setText("");
-            txtAge.setText("");
+                txtName.setText("");
+                txtPhone.setText("");
+                txtEmail.setText("");
+                txtAge.setText("");
+            }
         }
     }
 }
