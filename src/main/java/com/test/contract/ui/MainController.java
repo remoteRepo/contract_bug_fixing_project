@@ -70,6 +70,7 @@ public class MainController {
         TableColumn<Contact, String> emailColumn = new TableColumn<>("E-mail");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
+
         table.getColumns().setAll(idColumn, nameColumn, phoneColumn, emailColumn);
 
         // Данные таблицы
@@ -89,5 +90,6 @@ public class MainController {
         txtName.setText("");
         txtPhone.setText("");
         txtEmail.setText("");
+        txtAge.setText("");
     }
 }
