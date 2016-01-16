@@ -50,7 +50,9 @@ public class Contact implements Serializable {
     }
 
     public String getPhone() {
-        return phone;
+        if (phone.length() > 1){
+        return  phone ;}
+        else return "Нет совпадений";
     }
 
     public void setPhone(String phone) {
